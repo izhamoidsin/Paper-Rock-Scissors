@@ -1,11 +1,11 @@
 package com.izham.prs.player;
 
 import com.izham.prs.game.Move;
-import com.izham.prs.game.RoundHistory;
+import com.izham.prs.game.RoundHistoryObserver;
 
 import java.util.UUID;
 
-public abstract class Player {
+public abstract class Player implements RoundHistoryObserver {
     private final UUID id;
     private final String name;
 
@@ -13,8 +13,6 @@ public abstract class Player {
         this.name = name;
         id = UUID.randomUUID();
     }
-
-    public abstract void observeRound(RoundHistory roundHistory);
 
     public abstract Move nextMove();
 

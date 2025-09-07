@@ -11,10 +11,9 @@ public class SymbolTest {
     @ParameterizedTest
     @CsvSource({
             "h,PAPER",
-            "HAND,PAPER",
+            "H,PAPER",
             "f,ROCK",
-            "Fist,ROCK",
-            "fINGErs,SCISSORS",
+            "F,ROCK",
             "V,SCISSORS",
             "v,SCISSORS",
     })

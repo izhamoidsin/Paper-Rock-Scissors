@@ -1,11 +1,8 @@
 package com.izham.prs.player.strategy;
 
 import com.izham.prs.game.Move;
-import com.izham.prs.game.RoundHistory;
 
 import java.util.*;
-import java.util.function.Function;
-import java.util.stream.Collectors;
 
 public class LearningStrategy implements Strategy {
     private final Strategy fallback;
@@ -22,20 +19,24 @@ public class LearningStrategy implements Strategy {
     public Move decideMove(List<Move> opponentMovesMemory) {
         if (opponentMovesMemory.isEmpty()) return fallback.decideMove(opponentMovesMemory);
 
-        var mostFrequentOponentMove = opponentMovesMemory.stream()
-                .collect(Collectors.groupingBy(Function.identity(), Collectors.counting()))
-                .entrySet()
-                .stream()
-                .max(Comparator.comparingLong(Map.Entry::getValue))
-                .map(Map.Entry::getKey)
-                .get();  // because of emptyHistory check above, it's safe
-
+        var moveFrequency = new HashMap<Move, Integer>();
+        var maxFrequency = 0;
+        Move mostCommonMove = null;
+        for (Move move : opponentMovesMemory) {
+            var frequency = moveFrequency.compute(move, (k, v) -> v == null ? 1 : v + 1);
+            if (frequency > maxFrequency) {
+                maxFrequency = frequency;
+                mostCommonMove = move;
+            }
+        }
+        Move bestCounterMove = null;
         for (Move move : Move.values()) {
-            if (move.beats(mostFrequentOponentMove))
-                return move;
+            if (move.beats(mostCommonMove)) {
+                bestCounterMove = move;
+                break;
+            }
         }
 
-        // todo remove this redundant piece of code
-        return fallback.decideMove(opponentMovesMemory);
+        return bestCounterMove;
     }
 }

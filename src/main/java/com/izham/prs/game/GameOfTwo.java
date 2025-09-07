@@ -1,30 +1,31 @@
 package com.izham.prs.game;
 
 import com.izham.prs.player.Player;
-import com.izham.prs.ui.UI;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
 import java.util.stream.Collectors;
 
-public class GameOf2 implements Game {
+public class GameOfTwo implements Game {
     private final int numberOfRounds;
-    private final UI ui;
 
     private final Player playerA;
     private final Player playerB;
 
     private final Map<Player, Integer> scoreboard;
 
-    public GameOf2(int numberOfRounds, UI ui, Player playerA, Player playerB) {
+    private final Set<RoundHistoryObserver> observers;
+
+    public GameOfTwo(int numberOfRounds, Player playerA, Player playerB) {
         this.numberOfRounds = numberOfRounds;
-        this.ui = ui;
         this.playerA = playerA;
         this.playerB = playerB;
         this.scoreboard = new HashMap<>() {{
             put(playerA, 0);
             put(playerB, 0);
+        }};
+        this.observers = new HashSet<>() {{
+           add(playerA);
+           add(playerB);
         }};
     }
 
@@ -48,22 +49,31 @@ public class GameOf2 implements Game {
                 winner.stream().collect(Collectors.toSet())
         );
 
-        playerA.observeRound(roundResult);
-        playerB.observeRound(roundResult);
-
-        // todo try using observer
-        ui.showRoundResult(roundResult);
+        notifyObservers(roundResult);
     }
 
     @Override
     public void play() {
-        for (int round = 0; round < numberOfRounds; round++) {
+        for (int round = 1; round <= numberOfRounds; round++) {
             playRound(round);
         }
     }
 
     @Override
     public Map<Player, Integer> getScoreboard() {
+        // readonly copy to be safe that it is not modified by the code outside of this class
         return Map.copyOf(scoreboard);
+    }
+
+    public void addObserver(RoundHistoryObserver observer) {
+        observers.add(observer);
+    }
+
+    public void removeObserver(RoundHistoryObserver observer) {
+        observers.remove(observer);
+    }
+
+    private void notifyObservers(RoundHistory roundHistory) {
+        observers.forEach(observer -> observer.onRoundComplete(roundHistory));
     }
 }

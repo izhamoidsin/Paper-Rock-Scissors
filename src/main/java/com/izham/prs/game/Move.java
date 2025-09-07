@@ -1,12 +1,11 @@
 package com.izham.prs.game;
 
-import java.util.Set;
-
 public enum Move {
+    // If the game evolves (e.g. Paper, Scissors, Rock, Lizard, Spock) new Moves should be added here,
+    // Compiler will enforce switch block update and com/izham/prs/game/MoveTest.java will check the rules, including new ones.
     PAPER,
     SCISSORS,
     ROCK;
-    // todo check how it would evolve if we do Rock, Paper, Scissors, Lizard, Spock
 
     public boolean beats(Move other) {
         return switch (this) {

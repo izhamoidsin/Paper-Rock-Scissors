@@ -24,7 +24,7 @@ public class ComputerPlayer extends Player {
     }
 
     @Override
-    public void observeRound(RoundHistory roundHistory) {
+    public void onRoundComplete(RoundHistory roundHistory) {
         var movesToRemember = roundHistory
                 .moves()
                 .entrySet()
@@ -34,6 +34,11 @@ public class ComputerPlayer extends Player {
                 .toList();
 
         opponentMovesMemory.addAll(movesToRemember);
+    }
+
+    List<Move> getOpponentMovesMemory() {
+        // do not need read-only copy because it is internal API for testing with package private visibility
+        return opponentMovesMemory;
     }
 }
 

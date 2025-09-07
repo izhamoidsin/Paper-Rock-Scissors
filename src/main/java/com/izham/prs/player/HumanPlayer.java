@@ -20,7 +20,7 @@ public class HumanPlayer extends Player {
     }
 
     @Override
-    public void observeRound(RoundHistory roundHistory) {
+    public void onRoundComplete(RoundHistory roundHistory) {
         // do nothing, it's up to a human to analyze the round outcome
     }
 }
