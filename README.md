@@ -43,5 +43,5 @@ java -cp target/paper-rock-scissors-1.0-SNAPSHOT.jar com/izham/prs/Main
 - **Build**: Apache Maven (quickstart template). It’s a simple, widely used build tool for Java apps.
 - **Run**: exec-maven-plugin added for convenience.
 - **Tests**: JUnit 5, including parameterized tests. Standard solution for unit tests. Unless anything specific/sophisticated is needed, it is my default choice. 
-- **Language** features: modern Java constructs such as **Record** classes, **Stream API**, and **pattern-matching for switch**.
+- **Language features**: modern Java constructs such as **Record** classes, **Stream API**, and **pattern-matching for switch**.
   - **Runtime requirement**: Java 21.
