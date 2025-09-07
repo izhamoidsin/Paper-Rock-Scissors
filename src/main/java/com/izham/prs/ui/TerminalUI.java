@@ -59,10 +59,15 @@ public class TerminalUI implements UI {
 
     @Override
     public void showScoreboard(Map<Player, Integer> scoreboard) {
-        System.out.println("==================================");
-        System.out.println("GAME OVER");
         System.out.println("The score board:");
         scoreboard.forEach((key, value) -> System.out.println(key.getName() + ": " + value));
         // todo find an print a winner or sort the scoreboard by the final score
+    }
+
+
+    @Override
+    public void messageGameOver() {
+        System.out.println("==================================");
+        System.out.println("GAME OVER");
     }
 }

@@ -16,7 +16,7 @@ java -cp target/paper-rock-scissors-1.0-SNAPSHOT.jar com/izham/prs/Main
 
 # Implementation notes
 ## Design considerations
-1. Game could be extended in the future: 
+1. Anticipated future changes to the game requirements: 
    1. Player vs computer -> player vs mob of computers.
       - Then another subclass of `Game` should be created, e.g. `GameOfMany`. Knowing there are only two players, keeps `GameOfTwo` easier to limit premature generalization.
       - `Player`, `Strategy`, `RoundHistory` and `UI` were easy to make future-proof, so I went for it. They are not limited to two players only. 

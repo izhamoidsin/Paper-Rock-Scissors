@@ -21,6 +21,7 @@ public class Main {
 
         game.play();
 
+        terminal.messageGameOver();
         terminal.showScoreboard(game.getScoreboard());
     }
 }

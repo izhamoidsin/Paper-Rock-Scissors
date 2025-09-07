@@ -12,4 +12,6 @@ public interface UI extends RoundHistoryObserver {
     Move askNextMove();
 
     void showScoreboard(Map<Player, Integer> scoreboard);
+
+    void messageGameOver();
 }
