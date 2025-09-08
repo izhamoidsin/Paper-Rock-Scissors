@@ -12,7 +12,31 @@ mvn package
 java -cp target/paper-rock-scissors-1.0-SNAPSHOT.jar com/izham/prs/Main
 ```
 
-> The app does not take any command line parameters and does not have a configuration file. It reads all it needs from the console after launch. You'll be prompted to specify number of rounds and a gesture/move for each round.  
+> The app does not take any command line parameters and does not have a configuration file. It reads all it needs from the console after launch. You'll be prompted to specify number of rounds and a gesture/move for each round.
+
+Sample of the game output
+```aiignore
+Enter number of rounds you want to play: 2
+Please show your hand F - FIST \ H - OPEN_HAND \ V - INDEX_AND_MIDDLE_FINGERS: f
+Round 1
+Player played ROCK
+Computer played ROCK
+It's a draw!
+
+
+Please show your hand F - FIST \ H - OPEN_HAND \ V - INDEX_AND_MIDDLE_FINGERS: v
+Round 2
+Player played SCISSORS
+Computer played PAPER
+The winner is Player!
+
+
+==================================
+GAME OVER
+The score board:
+Player: 1
+Computer: 0
+```
 
 # Implementation notes
 ## Design considerations
