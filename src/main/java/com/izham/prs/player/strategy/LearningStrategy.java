@@ -19,6 +19,7 @@ public class LearningStrategy implements Strategy {
     public Move decideMove(List<Move> opponentMovesMemory) {
         if (opponentMovesMemory.isEmpty()) return fallback.decideMove(opponentMovesMemory);
 
+        // going imperative here because in this case it is clearer than verbose Stream Api chain
         var moveFrequency = new HashMap<Move, Integer>();
         var maxFrequency = 0;
         Move mostCommonMove = null;
@@ -36,7 +37,10 @@ public class LearningStrategy implements Strategy {
                 break;
             }
         }
-
+        if (bestCounterMove == null) {
+            // todo log error here; no move to beat mostCommonMove but the game should continue
+            bestCounterMove = fallback.decideMove(opponentMovesMemory);
+        }
         return bestCounterMove;
     }
 }
