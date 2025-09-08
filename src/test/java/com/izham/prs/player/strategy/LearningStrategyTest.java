@@ -34,8 +34,10 @@ public class LearningStrategyTest {
 
         var sut = new LearningStrategy(new BruteStrategy(Move.SCISSORS));
         assertEquals(Move.PAPER, sut.decideMove(memory));
+
         memory.add(Move.PAPER);
         assertTrue(Move.PAPER.equals(sut.decideMove(memory)) || Move.SCISSORS.equals(sut.decideMove(memory)));
+
         memory.add(Move.PAPER);
         assertEquals(Move.SCISSORS, sut.decideMove(memory));
     }

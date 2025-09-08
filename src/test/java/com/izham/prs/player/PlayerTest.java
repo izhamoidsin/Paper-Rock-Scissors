@@ -15,12 +15,14 @@ public class PlayerTest {
     @Test
     public void computerMemorizesOpponentMoves() {
         var computer = new ComputerPlayer("Computer", new RandomStrategy());
-        var opponent = new HumanPlayer("Human", () -> Move.ROCK);
+        var opponent = new HumanPlayer("Human", () -> Move.ROCK);    // Stubbed move means nothing for the test
 
         computer.onRoundComplete(new RoundHistory(0, Map.of(computer, Move.SCISSORS, opponent, Move.ROCK), Set.of(opponent)));
-        computer.onRoundComplete(new RoundHistory(0, Map.of(computer, Move.ROCK, opponent, Move.ROCK), Set.of()));
-        computer.onRoundComplete(new RoundHistory(0, Map.of(computer, Move.PAPER, opponent, Move.ROCK), Set.of(computer)));
+        computer.onRoundComplete(new RoundHistory(1, Map.of(computer, Move.ROCK, opponent, Move.ROCK), Set.of()));
+        computer.onRoundComplete(new RoundHistory(2, Map.of(computer, Move.PAPER, opponent, Move.ROCK), Set.of(computer)));
+        computer.onRoundComplete(new RoundHistory(3, Map.of(computer, Move.SCISSORS, opponent, Move.ROCK), Set.of(computer)));
+        computer.onRoundComplete(new RoundHistory(4, Map.of(computer, Move.PAPER, opponent, Move.PAPER), Set.of(computer)));
 
-        assertEquals(computer.getOpponentMovesMemory(), List.of(Move.ROCK, Move.ROCK, Move.ROCK));
+        assertEquals(computer.getOpponentMovesMemory(), List.of(Move.ROCK, Move.ROCK, Move.ROCK, Move.ROCK, Move.PAPER));
     }
 }

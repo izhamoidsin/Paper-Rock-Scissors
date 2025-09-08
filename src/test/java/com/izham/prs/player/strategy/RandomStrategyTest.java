@@ -9,8 +9,8 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class RandomStrategyTest {
-    private static final int ATTEMPTS = 1000;
-    private static final int DEVIATION_THRESHOLD_PERCENT = 10;
+    private static final int ATTEMPTS = 10000;
+    private static final int DEVIATION_THRESHOLD_PERCENT = 5;
 
     @Test
     public void probabilityDistributedUniformly() {
@@ -22,16 +22,17 @@ public class RandomStrategyTest {
             moveFrequency.compute(move, (k, v) -> v == null ? 1 : v + 1);
         }
 
-        var expectedValue = ATTEMPTS / Move.values().length;
-        var deviationThreshold = expectedValue * DEVIATION_THRESHOLD_PERCENT / 100;
-        moveFrequency.entrySet().forEach(probability -> {
-            var deviation = Math.abs(probability.getValue() - expectedValue);
+        var expectedFrequency = ATTEMPTS / Move.values().length;
+        var deviationThreshold = expectedFrequency * DEVIATION_THRESHOLD_PERCENT / 100;
+        moveFrequency.entrySet().forEach(actualMoveFrequency -> {
+            var deviation = Math.abs(actualMoveFrequency.getValue() - expectedFrequency);
+            System.out.println("Expected: " + expectedFrequency + " actual: " + actualMoveFrequency.getValue());
             var errorMessage = String.format(
                 "%s move frequency %d is not in expected interval [%d,%d]",
-                probability.getKey(),
-                probability.getValue(),
-                expectedValue - deviationThreshold,
-                expectedValue + deviationThreshold
+                actualMoveFrequency.getKey(),
+                actualMoveFrequency.getValue(),
+                expectedFrequency - deviationThreshold,
+                expectedFrequency + deviationThreshold
             );
             assertTrue(deviation <= deviationThreshold, errorMessage);
         });
